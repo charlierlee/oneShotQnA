@@ -3,6 +3,6 @@ version: '2'
 services:
 
     abp_host:
-        image: dockerusername/host
+#        image: dockerusername/host
         ports:
             - "9901:5000"

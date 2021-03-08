@@ -15,8 +15,8 @@ class Translator():
             searchText = re.sub(i + "\s*", '', searchText, flags = re.I)
         
         question = text + "?"
-        reader = DocumentReader("NeuML/bert-small-cord19qa") 
-        #reader = DocumentReader("deepset/bert-base-cased-squad2") not enough RAM
+        #reader = DocumentReader("NeuML/bert-small-cord19qa") # needs less RAM
+        reader = DocumentReader("deepset/bert-base-cased-squad2") # needs more RAM
         results = wikipedia.search(searchText)
         if len(results) > 0:
             print(results[0])
