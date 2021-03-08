@@ -7,7 +7,7 @@ Pick a transformer modal. I have two options at the moment, but there are more:
 
 It will use wikipidia for its data source to lookup the answer, and then try to answer the question specifically from the data source.
 
-#Setup
+# Setup
 
 - install docker-compose
 - docker-compose build
