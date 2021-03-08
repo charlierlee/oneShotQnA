@@ -10,7 +10,7 @@ app.config["DEBUG"] = True # turn off in prod
 
 @app.route('/')
 def hello_world():
-    return 'Hello, World! Try the endpoints /summary?text=yourtext'
+    return 'Hello, World! Try the endpoints /summary?text=what is a computer'
 
 #get embedding and return top N matches
 @app.route('/summary', methods=['GET'])

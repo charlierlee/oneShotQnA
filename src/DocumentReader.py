@@ -65,7 +65,7 @@ class DocumentReader:
         if self.chunked:
             answer = ''
             for k, chunk in self.inputs.items():
-                answer_start_scores, answer_end_scores = self.model(**chunk)
+                answer_start_scores, answer_end_scores = self.model(**chunk).values()
 
                 answer_start = torch.argmax(answer_start_scores)
                 answer_end = torch.argmax(answer_end_scores) + 1
@@ -75,7 +75,7 @@ class DocumentReader:
                     answer += ans + " / "
             return answer
         else:
-            answer_start_scores, answer_end_scores = self.model(**self.inputs)
+            answer_start_scores, answer_end_scores = self.model(**self.inputs).values()
 
             answer_start = torch.argmax(answer_start_scores)  # get the most likely beginning of answer with the argmax of the score
             answer_end = torch.argmax(answer_end_scores) + 1  # get the most likely end of answer with the argmax of the score

@@ -2,7 +2,10 @@ version: '2'
 
 services:
 
-    abp_host:
-#        image: dockerusername/host
+    oneshotqna:
+#       image: dockerusername/host
+        build:
+            context: ./src
+            dockerfile: ./Dockerfile
         ports:
             - "9901:5000"
