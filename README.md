@@ -8,3 +8,10 @@ Pick a transformer modal. I have two options at the moment, but there are more:
 It will use wikipidia for its data source to lookup the answer, and then try to answer the question specifically from the data source.
 
 ![alt text](https://github.com/charlierlee/oneshotqna/blob/master/screenshot.png?raw=true)
+
+# Setup
+
+- install docker-compose
+- docker-compose build
+- docker-compose up
+- navigate browser to http://x.x.x.x:9901

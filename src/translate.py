@@ -13,8 +13,10 @@ class Translator():
         bannedWords = ['what is', "what are", 'who is', "who are", 'where is',"where are", "when is",  "where are", "what does", "how is", "how are", "how does", "how did"]
         for i in bannedWords: 
             searchText = re.sub(i + "\s*", '', searchText, flags = re.I)
-        
-        question = text + "?"
+        if text.endswith("?") == False:
+            question = text + "?"
+        else:
+            question = text
         #reader = DocumentReader("NeuML/bert-small-cord19qa") # needs less RAM
         reader = DocumentReader("deepset/bert-base-cased-squad2") # needs more RAM
         results = wikipedia.search(searchText)
