@@ -6,3 +6,5 @@ Pick a transformer modal. I have two options at the moment, but there are more:
 - deepset/bert-base-cased-squad2 <-- needs a bit more GPU RAM
 
 It will use wikipidia for its data source to lookup the answer, and then try to answer the question specifically from the data source.
+
+![alt text](https://github.com/charlierlee/oneshotqna/blob/master/screenshot.png?raw=true)
