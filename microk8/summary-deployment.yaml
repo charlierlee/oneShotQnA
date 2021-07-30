@@ -26,6 +26,9 @@ spec:
     spec:
       containers:
       - image: localhost:32000/summary
+        resources:
+          limits:
+            nvidia.com/gpu: 1
         imagePullPolicy: ""
         name: summary
         ports:
