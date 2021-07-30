@@ -1,8 +1,6 @@
 #%% 
 from streamlit import spinner
 import torch
-from transformers import BertForQuestionAnswering
-from transformers import BertTokenizer
 from transformers import pipeline
 import streamlit as st
 
@@ -41,4 +39,12 @@ If convicted, Barrientos faces up to four years in prison.  Her next court appea
 """
 
 summ = load_summarization_model()
-bert_summarization(summ, ARTICLE)
+
+form = st.form(key='my-form')
+user_input = form.text_area('original text', ARTICLE)
+submit = form.form_submit_button('Submit')
+
+st.write('Press submit to have summarize the original text')
+
+if submit:
+    bert_summarization(summ, user_input)
