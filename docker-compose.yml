@@ -10,6 +10,7 @@ services:
 #        ports:
 #            - "9901:5000"
     summary:
+        image: localhost:32000/summary
         build:
             context: ./src/summarization
             dockerfile: ./Dockerfile

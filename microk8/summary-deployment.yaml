@@ -25,7 +25,7 @@ spec:
         io.kompose.service: summary
     spec:
       containers:
-      - image: summary
+      - image: localhost:32000/summary
         imagePullPolicy: ""
         name: summary
         ports:
