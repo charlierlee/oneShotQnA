@@ -6,7 +6,13 @@ https://discuss.kubernetes.io/t/my-adventures-with-microk8s-to-enable-gpu-and-us
 microk8s enable gpu ^
 to test: lsmod | grep -i -e cuda -e nvidia -e nouveau
 shoud return nothing ^
+update to latest:
+sudo snap refresh microk8s --channel=latest/edge
 then run: microk8s enable gpu
+Troubleshooting:
+microk8s inspect
+sudo journalctl -u snap.microk8s.daemon-containerd -n 1000 --no-pager
+
 
 microk8s enable host-access
 
