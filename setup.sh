@@ -16,3 +16,9 @@ docker-compose down -v --rmi local
 docker rm -vf $(docker ps -a -q)
 docker rmi -f $(docker images -a -q)
 docker system prune --all
+
+
+# to run summary.py
+# to view this Streamlit app on a browser, run it with the following command:
+streamlit run src/summary.py
+
