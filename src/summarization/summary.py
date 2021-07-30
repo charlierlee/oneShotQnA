@@ -44,7 +44,8 @@ form = st.form(key='my-form')
 user_input = form.text_area('original text', ARTICLE)
 submit = form.form_submit_button('Submit')
 
-st.write('Press submit to have summarize the original text')
+st.write('Press submit to summarize the original text')
 
 if submit:
     bert_summarization(summ, user_input)
+    st.write('There is nothing left to summarize')

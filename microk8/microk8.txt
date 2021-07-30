@@ -1,6 +1,13 @@
 #among other things:
 https://pacroy.medium.com/single-node-kubernetes-on-home-lab-using-microk8s-metallb-and-traefik-7bb1ea38fcc2
 
+
+https://discuss.kubernetes.io/t/my-adventures-with-microk8s-to-enable-gpu-and-use-mig-on-a-dgx-a100/15366
+microk8s enable gpu ^
+to test: lsmod | grep -i -e cuda -e nvidia -e nouveau
+shoud return nothing ^
+then run: microk8s enable gpu
+
 microk8s enable host-access
 
 docker push localhost:32000/summary
