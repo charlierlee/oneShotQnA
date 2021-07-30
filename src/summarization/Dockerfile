@@ -8,4 +8,4 @@ RUN pip install -r requirements.txt
 COPY . /app
 
 EXPOSE 8501
-CMD ["python", "summary.py", "runserver", "0.0.0.0:5000"]
+CMD ["streamlit", "run", "summary.py"]
