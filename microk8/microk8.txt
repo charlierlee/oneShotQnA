@@ -23,7 +23,7 @@ kompose --file docker-compose.yml --volumes hostPath convert
 
 microk8s.kubectl apply -f summary-deployment.yaml
 microk8s.kubectl apply -f summary-service.yaml
-
+microk8s.kubectl apply -f metalLB-config.yaml
 
 microk8s kubectl get all --all-namespaces
 microk8s kubectl rollout restart deployment summary
