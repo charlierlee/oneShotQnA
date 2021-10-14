@@ -1,25 +1,41 @@
 #among other things:
 https://pacroy.medium.com/single-node-kubernetes-on-home-lab-using-microk8s-metallb-and-traefik-7bb1ea38fcc2
-
+sudo snap install microk8s --classic --channel=latest/edge
+microk8s enable dns
+microk8s enable gpu
+microk8s enable registry
+microk8s enable metallb
+sudo apt-get install iptables-persistent
+sudo iptables -P FORWARD ACCEPT
+sudo nano /etc/docker/daemon.json
+{
+    "insecure-registries" : ["localhost:32000"] 
+}
+sudo systemctl restart docker
+#test http://localhost:32000/v2/summary
+microk8s inspect
+microk8s add-node
 
 https://discuss.kubernetes.io/t/my-adventures-with-microk8s-to-enable-gpu-and-use-mig-on-a-dgx-a100/15366
 microk8s enable gpu ^
-to test: lsmod | grep -i -e cuda -e nvidia -e nouveau
-shoud return nothing ^
-update to latest:
-sudo snap refresh microk8s --channel=latest/edge
-then run: microk8s enable gpu
+    to test: lsmod | grep -i -e cuda -e nvidia -e nouveau
+    shoud return nothing ^
+    update to latest:
+    sudo snap refresh microk8s --channel=latest/edge
+    then run: microk8s enable gpu
 Troubleshooting:
-microk8s inspect
-sudo journalctl -u snap.microk8s.daemon-containerd -n 1000 --no-pager
-
-
-microk8s enable host-access
+    microk8s inspect
+    microk8s status
+    sudo journalctl -u snap.microk8s.daemon-containerd -n 1000 --no-pager
+    microk8s kubectl logs gpu-operator-node-feature-discovery-worker-hbkfg
+    microk8s kubectl logs pod/summary-5df6949b64-9rxvx
 
 docker push localhost:32000/summary
+# test http://127.0.0.1:32000/v2/_catalog
 
-kompose --volumes hostPath convert
-kompose --file docker-compose.yml --volumes hostPath convert
+# already done
+    kompose --volumes hostPath convert
+    kompose --file docker-compose.yml --volumes hostPath convert
 
 microk8s.kubectl apply -f summary-deployment.yaml
 microk8s.kubectl apply -f summary-service.yaml
@@ -51,8 +67,12 @@ do
 done;
 
 microk8s kubectl delete --all pods --namespace=default
-microk8s kubectl delete --all deployments --namespace=default
-microk8s kubectl delete --all service --namespace=default
+#microk8s kubectl delete --all deployments --namespace=default
+ ^ this will delete a service from microk8s enable gpu
+#microk8s kubectl delete --all service --namespace=default
+ ^ this will delete a service from microk8s enable gpu
+microk8s kubectl delete pod/gpu-operator-node-feature-discovery-worker-rxffh
+microk8s kubectl delete pod/summary-6596bc774f-zzdzd
 
 microk8s kubectl get netpol -n default
 microk8s kubectl delete netpol fscrawler-net -n default

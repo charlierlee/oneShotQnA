@@ -1,3 +1,7 @@
+# Summary
+
+![alt text](summary.png?raw=true)
+
 # One Shot Q & A
 
 Pick a transformer modal. I have two options at the moment, but there are more:
@@ -7,7 +11,7 @@ Pick a transformer modal. I have two options at the moment, but there are more:
 
 It will use wikipidia for its data source to lookup the answer, and then try to answer the question specifically from the data source.
 
-![alt text](screenshot.png?raw=true)
+![alt text](oneshotQnA.png?raw=true)
 
 # Setup
 
