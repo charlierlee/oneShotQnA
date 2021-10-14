@@ -56,3 +56,13 @@ microk8s kubectl delete --all service --namespace=default
 
 microk8s kubectl get netpol -n default
 microk8s kubectl delete netpol fscrawler-net -n default
+
+microk8s kubectl label service/summary release-version=1.0
+microk8s kubectl label deployment/summary release-version=1.0
+microk8s kubectl label pods/summary-7495fdddd-lfkjj release-version=1.0
+
+microk8s kubectl get all --selector release-version=1.0
+microk8s kubectl get all -l 'release-version in (1.0)' --show-labels
+
+microk8s kubectl get pods --selector release-version=1.0
+microk8s kubectl get pods -l 'release-version in (1.0)' --show-labels
