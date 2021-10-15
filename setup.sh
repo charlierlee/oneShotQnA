@@ -7,14 +7,16 @@ cd src
 flask run --host=0.0.0.0 --port=5000
 
 # to run in docker
+#  Install docker
+#   To configure after 1st install
+    sudo groupadd docker
+    sudo usermod -aG docker $USER
+    newgrp docker
+    docker run hello-world
+sudo apt install docker-compose
+
 docker-compose build
 docker-compose up
-
-if qna:
-navigate browser to http://0.0.0.0:9901
-
-if summary:
-navigate browser to http://0.0.0.0:8501
 
 #to clear everything in docker:
 docker-compose down -v --rmi local

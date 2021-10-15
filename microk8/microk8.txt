@@ -1,10 +1,9 @@
-#among other things:
-https://pacroy.medium.com/single-node-kubernetes-on-home-lab-using-microk8s-metallb-and-traefik-7bb1ea38fcc2
-sudo snap install microk8s --classic --channel=latest/edge
-microk8s enable dns
-microk8s enable gpu
+sudo snap install microk8s --channel=1.21/beta --classic
+microk8s enable gpu  <-- The gpu depends on the host machine having a working gpu
+
 microk8s enable registry
-microk8s enable metallb
+#microk8s enable metallb
+
 sudo apt-get install iptables-persistent
 sudo iptables -P FORWARD ACCEPT
 sudo nano /etc/docker/daemon.json
@@ -14,15 +13,9 @@ sudo nano /etc/docker/daemon.json
 sudo systemctl restart docker
 #test http://localhost:32000/v2/summary
 microk8s inspect
-microk8s add-node
+#microk8s add-node
 
-https://discuss.kubernetes.io/t/my-adventures-with-microk8s-to-enable-gpu-and-use-mig-on-a-dgx-a100/15366
-microk8s enable gpu ^
-    to test: lsmod | grep -i -e cuda -e nvidia -e nouveau
-    shoud return nothing ^
-    update to latest:
-    sudo snap refresh microk8s --channel=latest/edge
-    then run: microk8s enable gpu
+
 Troubleshooting:
     microk8s inspect
     microk8s status
@@ -39,50 +32,50 @@ docker push localhost:32000/summary
 
 microk8s.kubectl apply -f summary-deployment.yaml
 microk8s.kubectl apply -f summary-service.yaml
-microk8s.kubectl apply -f metalLB-config.yaml
 
-microk8s kubectl get all --all-namespaces
-microk8s kubectl rollout restart deployment summary
-microk8s kubectl rollout restart deployment
-microk8s kubectl logs summary-b46cb75d8-qd7fv
-microk8s kubectl expose deployment summary --type=NodePort --port=8501 --name=summary-service
+More Troubleshooting:
+    microk8s kubectl get all --all-namespaces
+    microk8s kubectl rollout restart deployment summary
+    microk8s kubectl rollout restart deployment
+    microk8s kubectl logs summary-b46cb75d8-qd7fv
+    microk8s kubectl expose deployment summary --type=NodePort --port=8501 --name=summary-service
 
-microk8s kubectl port-forward service/summary 8501:8501 -n default
+    microk8s kubectl port-forward service/summary 8501:8501 -n default
 
-microk8s.kubectl describe pod
-microk8s inspect
+    microk8s.kubectl describe pod
+    microk8s inspect
 
-microk8s start
-microk8s ctr images ls
-microk8s kubectl exec -it summary-7c95bc4459-tzlbm -- /bin/bash
-microk8s stop
+    microk8s start
+    microk8s ctr images ls
+    microk8s kubectl exec -it summary-7c95bc4459-tzlbm -- /bin/bash
+    microk8s stop
 
-# to remove all images:
-# get all images that start with localhost:32000, output the results into image_ls file
-sudo microk8s ctr images ls name~='localhost:32000' | awk {'print $1'} > image_ls 
-# loop over file, remove each image
-cat image_ls | while read line || [[ -n $line ]];
-do
-    microk8s ctr images rm $line
-done;
+    # to remove all images:
+    # get all images that start with localhost:32000, output the results into image_ls file
+    sudo microk8s ctr images ls name~='localhost:32000' | awk {'print $1'} > image_ls 
+    # loop over file, remove each image
+    cat image_ls | while read line || [[ -n $line ]];
+    do
+        microk8s ctr images rm $line
+    done;
 
-microk8s kubectl delete --all pods --namespace=default
-#microk8s kubectl delete --all deployments --namespace=default
- ^ this will delete a service from microk8s enable gpu
-#microk8s kubectl delete --all service --namespace=default
- ^ this will delete a service from microk8s enable gpu
-microk8s kubectl delete pod/gpu-operator-node-feature-discovery-worker-rxffh
-microk8s kubectl delete pod/summary-6596bc774f-zzdzd
+    microk8s kubectl delete --all pods --namespace=default
+    #microk8s kubectl delete --all deployments --namespace=default
+    ^ this will delete a service from microk8s enable gpu
+    #microk8s kubectl delete --all service --namespace=default
+    ^ this will delete a service from microk8s enable gpu
+    microk8s kubectl delete pod/gpu-operator-node-feature-discovery-worker-rxffh
+    microk8s kubectl delete pod/summary-6596bc774f-zzdzd
 
-microk8s kubectl get netpol -n default
-microk8s kubectl delete netpol fscrawler-net -n default
+    microk8s kubectl get netpol -n default
+    microk8s kubectl delete netpol fscrawler-net -n default
 
-microk8s kubectl label service/summary release-version=1.0
-microk8s kubectl label deployment/summary release-version=1.0
-microk8s kubectl label pods/summary-7495fdddd-lfkjj release-version=1.0
+    microk8s kubectl label service/summary release-version=1.0
+    microk8s kubectl label deployment/summary release-version=1.0
+    microk8s kubectl label pods/summary-7495fdddd-lfkjj release-version=1.0
 
-microk8s kubectl get all --selector release-version=1.0
-microk8s kubectl get all -l 'release-version in (1.0)' --show-labels
+    microk8s kubectl get all --selector release-version=1.0
+    microk8s kubectl get all -l 'release-version in (1.0)' --show-labels
 
-microk8s kubectl get pods --selector release-version=1.0
-microk8s kubectl get pods -l 'release-version in (1.0)' --show-labels
+    microk8s kubectl get pods --selector release-version=1.0
+    microk8s kubectl get pods -l 'release-version in (1.0)' --show-labels
