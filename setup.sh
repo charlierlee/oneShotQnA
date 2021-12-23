@@ -24,8 +24,9 @@ docker rm -vf $(docker ps -a -q)
 docker rmi -f $(docker images -a -q)
 docker system prune --all
 
+# To Configure, see microk8/microk8.txt
 
-
-# microk8s
+# To deploy
 docker-compose build
-then see microk8/microk8.txt
+docker push localhost:32000/summary:1.0
+microk8s helm3 install summary ./summary
