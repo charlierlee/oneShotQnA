@@ -23,7 +23,7 @@ Troubleshooting:
     microk8s kubectl logs gpu-operator-node-feature-discovery-worker-hbkfg
     microk8s kubectl logs pod/summary-5df6949b64-9rxvx
 
-docker push localhost:32000/summary
+docker push localhost:32000/summary:1.0
 # test http://127.0.0.1:32000/v2/_catalog
 
 # already done
